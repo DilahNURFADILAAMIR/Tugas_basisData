@@ -1,0 +1,248 @@
+Microsoft Windows [Version 10.0.19045.6456]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 12
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASE rumah_sakit;
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [(none)]> USE rumah_sakit;
+Database changed
+MariaDB [rumah_sakit]> CREATE TABLE pasien (
+    ->     id_pasien INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nama VARCHAR(100),
+    ->     umur INT,
+    ->     alamat VARCHAR(150)
+    -> );
+Query OK, 0 rows affected (0.033 sec)
+
+MariaDB [rumah_sakit]> CREATE TABLE dokter (
+    ->     id_dokter INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nama VARCHAR(100),
+    ->     spesialis VARCHAR(50),
+    ->     no_hp VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.023 sec)
+
+MariaDB [rumah_sakit]> CREATE TABLE kunjungan (
+    ->     id_kunjungan INT AUTO_INCREMENT PRIMARY KEY,
+    ->     id_pasien INT,
+    ->     id_dokter INT,
+    ->     tanggal DATE,
+    ->     keluhan VARCHAR(150),
+    ->     FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien),
+    ->     FOREIGN KEY (id_dokter) REFERENCES dokter(id_dokter)
+    -> );
+Query OK, 0 rows affected (0.076 sec)
+
+MariaDB [rumah_sakit]> INSERT INTO pasien (nama, umur, alamat) VALUES
+    -> ('Rama', 25, 'Jl. Melati 1'),
+    -> ('Putri', 30, 'Jl. Anggrek 2'),
+    -> ('Budi', 40, 'Jl. Kenanga 3'),
+    -> ('Nanda', 22, 'Jl. Mawar 4'),
+    -> ('Salsa', 35, 'Jl. Teratai 5'),
+    -> ('Fahri', 28, 'Jl. Dahlia 6'),
+    -> ('Lala', 33, 'Jl. Seroja 7'),
+    -> ('Reza', 45, 'Jl. Cemara 8'),
+    -> ('Tiara', 20, 'Jl. Ketapang 9'),
+    -> ('Dimas', 38, 'Jl. Kamboja 10'),
+    -> ('Maya', 27, 'Jl. Akasia 11'),
+    -> ('Rizky', 31, 'Jl. Flamboyan 12'),
+    -> ('Wawan', 29, 'Jl. Pinang 13'),
+    -> ('Rina', 24, 'Jl. Randu 14'),
+    -> ('Dito', 36, 'Jl. Pepaya 15');
+Query OK, 15 rows affected (0.014 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [rumah_sakit]> INSERT INTO dokter (nama, spesialis, no_hp) VALUES
+    -> ('Dr. Andi', 'Umum', '081300001'),
+    -> ('Dr. Rina', 'Anak', '081300002'),
+    -> ('Dr. Budi', 'Jantung', '081300003'),
+    -> ('Dr. Laila', 'Kandungan', '081300004'),
+    -> ('Dr. Fajar', 'Bedah', '081300005'),
+    -> ('Dr. Maya', 'Kulit', '081300006'),
+    -> ('Dr. Rizal', 'Saraf', '081300007'),
+    -> ('Dr. Putri', 'THT', '081300008'),
+    -> ('Dr. Hadi', 'Mata', '081300009'),
+    -> ('Dr. Tika', 'Gigi', '081300010'),
+    -> ('Dr. Nita', 'Psikiatri', '081300011'),
+    -> ('Dr. Wawan', 'Paru-paru', '081300012'),
+    -> ('Dr. Fina', 'Ginjal', '081300013'),
+    -> ('Dr. Dedi', 'Orthopedi', '081300014'),
+    -> ('Dr. Sari', 'Rehab Medis', '081300015');
+Query OK, 15 rows affected (0.013 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [rumah_sakit]> INSERT INTO kunjungan (id_pasien, id_dokter, tanggal, keluhan) VALUES
+    -> (1, 2, '2025-01-10', 'Demam'),
+    -> (2, 1, '2025-01-11', 'Batuk'),
+    -> (3, 5, '2025-01-11', 'Luka jatuh'),
+    -> (4, 3, '2025-01-12', 'Nyeri dada'),
+    -> (5, 4, '2025-01-13', 'Cek kehamilan'),
+    -> (6, 10, '2025-01-14', 'Sakit gigi'),
+    -> (7, 9, '2025-01-15', 'Mata merah'),
+    -> (8, 6, '2025-01-16', 'Ruam kulit'),
+    -> (9, 8, '2025-01-17', 'Sakit telinga'),
+    -> (10, 14, '2025-01-17', 'Nyeri tulang'),
+    -> (11, 11, '2025-01-18', 'Cemas berlebih'),
+    -> (12, 12, '2025-01-19', 'Sesak napas'),
+    -> (13, 13, '2025-01-19', 'Masalah ginjal'),
+    -> (14, 7, '2025-01-20', 'Pusing berlebih'),
+    -> (15, 15, '2025-01-21', 'Terapi cedera');
+Query OK, 15 rows affected (0.024 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [rumah_sakit]> SELECT * FROM pasien;
++-----------+-------+------+------------------+
+| id_pasien | nama  | umur | alamat           |
++-----------+-------+------+------------------+
+|         1 | Rama  |   25 | Jl. Melati 1     |
+|         2 | Putri |   30 | Jl. Anggrek 2    |
+|         3 | Budi  |   40 | Jl. Kenanga 3    |
+|         4 | Nanda |   22 | Jl. Mawar 4      |
+|         5 | Salsa |   35 | Jl. Teratai 5    |
+|         6 | Fahri |   28 | Jl. Dahlia 6     |
+|         7 | Lala  |   33 | Jl. Seroja 7     |
+|         8 | Reza  |   45 | Jl. Cemara 8     |
+|         9 | Tiara |   20 | Jl. Ketapang 9   |
+|        10 | Dimas |   38 | Jl. Kamboja 10   |
+|        11 | Maya  |   27 | Jl. Akasia 11    |
+|        12 | Rizky |   31 | Jl. Flamboyan 12 |
+|        13 | Wawan |   29 | Jl. Pinang 13    |
+|        14 | Rina  |   24 | Jl. Randu 14     |
+|        15 | Dito  |   36 | Jl. Pepaya 15    |
++-----------+-------+------+------------------+
+15 rows in set (0.008 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM dokter;
++-----------+-----------+-------------+-----------+
+| id_dokter | nama      | spesialis   | no_hp     |
++-----------+-----------+-------------+-----------+
+|         1 | Dr. Andi  | Umum        | 081300001 |
+|         2 | Dr. Rina  | Anak        | 081300002 |
+|         3 | Dr. Budi  | Jantung     | 081300003 |
+|         4 | Dr. Laila | Kandungan   | 081300004 |
+|         5 | Dr. Fajar | Bedah       | 081300005 |
+|         6 | Dr. Maya  | Kulit       | 081300006 |
+|         7 | Dr. Rizal | Saraf       | 081300007 |
+|         8 | Dr. Putri | THT         | 081300008 |
+|         9 | Dr. Hadi  | Mata        | 081300009 |
+|        10 | Dr. Tika  | Gigi        | 081300010 |
+|        11 | Dr. Nita  | Psikiatri   | 081300011 |
+|        12 | Dr. Wawan | Paru-paru   | 081300012 |
+|        13 | Dr. Fina  | Ginjal      | 081300013 |
+|        14 | Dr. Dedi  | Orthopedi   | 081300014 |
+|        15 | Dr. Sari  | Rehab Medis | 081300015 |
++-----------+-----------+-------------+-----------+
+15 rows in set (0.001 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM kunjungan;
++--------------+-----------+-----------+------------+-----------------+
+| id_kunjungan | id_pasien | id_dokter | tanggal    | keluhan         |
++--------------+-----------+-----------+------------+-----------------+
+|            1 |         1 |         2 | 2025-01-10 | Demam           |
+|            2 |         2 |         1 | 2025-01-11 | Batuk           |
+|            3 |         3 |         5 | 2025-01-11 | Luka jatuh      |
+|            4 |         4 |         3 | 2025-01-12 | Nyeri dada      |
+|            5 |         5 |         4 | 2025-01-13 | Cek kehamilan   |
+|            6 |         6 |        10 | 2025-01-14 | Sakit gigi      |
+|            7 |         7 |         9 | 2025-01-15 | Mata merah      |
+|            8 |         8 |         6 | 2025-01-16 | Ruam kulit      |
+|            9 |         9 |         8 | 2025-01-17 | Sakit telinga   |
+|           10 |        10 |        14 | 2025-01-17 | Nyeri tulang    |
+|           11 |        11 |        11 | 2025-01-18 | Cemas berlebih  |
+|           12 |        12 |        12 | 2025-01-19 | Sesak napas     |
+|           13 |        13 |        13 | 2025-01-19 | Masalah ginjal  |
+|           14 |        14 |         7 | 2025-01-20 | Pusing berlebih |
+|           15 |        15 |        15 | 2025-01-21 | Terapi cedera   |
++--------------+-----------+-----------+------------+-----------------+
+15 rows in set (0.001 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM pasien
+    -> WHERE umur > 30;
++-----------+-------+------+------------------+
+| id_pasien | nama  | umur | alamat           |
++-----------+-------+------+------------------+
+|         3 | Budi  |   40 | Jl. Kenanga 3    |
+|         5 | Salsa |   35 | Jl. Teratai 5    |
+|         7 | Lala  |   33 | Jl. Seroja 7     |
+|         8 | Reza  |   45 | Jl. Cemara 8     |
+|        10 | Dimas |   38 | Jl. Kamboja 10   |
+|        12 | Rizky |   31 | Jl. Flamboyan 12 |
+|        15 | Dito  |   36 | Jl. Pepaya 15    |
++-----------+-------+------+------------------+
+7 rows in set (0.009 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM dokter
+    -> WHERE spesialis = 'Jantung';
++-----------+----------+-----------+-----------+
+| id_dokter | nama     | spesialis | no_hp     |
++-----------+----------+-----------+-----------+
+|         3 | Dr. Budi | Jantung   | 081300003 |
++-----------+----------+-----------+-----------+
+1 row in set (0.001 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM kunjungan
+    -> WHERE keluhan = 'Pusing berlebih';
++--------------+-----------+-----------+------------+-----------------+
+| id_kunjungan | id_pasien | id_dokter | tanggal    | keluhan         |
++--------------+-----------+-----------+------------+-----------------+
+|           14 |        14 |         7 | 2025-01-20 | Pusing berlebih |
++--------------+-----------+-----------+------------+-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM pasien
+    -> WHERE umur BETWEEN 25 AND 35;
++-----------+-------+------+------------------+
+| id_pasien | nama  | umur | alamat           |
++-----------+-------+------+------------------+
+|         1 | Rama  |   25 | Jl. Melati 1     |
+|         2 | Putri |   30 | Jl. Anggrek 2    |
+|         5 | Salsa |   35 | Jl. Teratai 5    |
+|         6 | Fahri |   28 | Jl. Dahlia 6     |
+|         7 | Lala  |   33 | Jl. Seroja 7     |
+|        11 | Maya  |   27 | Jl. Akasia 11    |
+|        12 | Rizky |   31 | Jl. Flamboyan 12 |
+|        13 | Wawan |   29 | Jl. Pinang 13    |
++-----------+-------+------+------------------+
+8 rows in set (0.008 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM kunjungan
+    -> WHERE tanggal BETWEEN '2025-01-12' AND '2025-01-18';
++--------------+-----------+-----------+------------+----------------+
+| id_kunjungan | id_pasien | id_dokter | tanggal    | keluhan        |
++--------------+-----------+-----------+------------+----------------+
+|            4 |         4 |         3 | 2025-01-12 | Nyeri dada     |
+|            5 |         5 |         4 | 2025-01-13 | Cek kehamilan  |
+|            6 |         6 |        10 | 2025-01-14 | Sakit gigi     |
+|            7 |         7 |         9 | 2025-01-15 | Mata merah     |
+|            8 |         8 |         6 | 2025-01-16 | Ruam kulit     |
+|            9 |         9 |         8 | 2025-01-17 | Sakit telinga  |
+|           10 |        10 |        14 | 2025-01-17 | Nyeri tulang   |
+|           11 |        11 |        11 | 2025-01-18 | Cemas berlebih |
++--------------+-----------+-----------+------------+----------------+
+8 rows in set (0.008 sec)
+
+MariaDB [rumah_sakit]> SELECT * FROM dokter
+    -> WHERE id_dokter BETWEEN 5 AND 10;
++-----------+-----------+-----------+-----------+
+| id_dokter | nama      | spesialis | no_hp     |
++-----------+-----------+-----------+-----------+
+|         5 | Dr. Fajar | Bedah     | 081300005 |
+|         6 | Dr. Maya  | Kulit     | 081300006 |
+|         7 | Dr. Rizal | Saraf     | 081300007 |
+|         8 | Dr. Putri | THT       | 081300008 |
+|         9 | Dr. Hadi  | Mata      | 081300009 |
+|        10 | Dr. Tika  | Gigi      | 081300010 |
++-----------+-----------+-----------+-----------+
+6 rows in set (0.008 sec)
+
+MariaDB [rumah_sakit]>
